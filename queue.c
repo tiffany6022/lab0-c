@@ -17,6 +17,7 @@ queue_t *q_new()
         return NULL;
     q->head = NULL;
     q->tail = NULL;
+    q->size = 0;
     return q;
 }
 
@@ -68,6 +69,7 @@ bool q_insert_head(queue_t *q, char *s)
     if (!q->head)
         q->tail = newh;
     q->head = newh;
+    q->size++;
     return true;
 }
 
@@ -100,6 +102,7 @@ bool q_insert_tail(queue_t *q, char *s)
         q->head = newt;
     q->tail->next = newt;
     q->tail = newt;
+    q->size++;
     return true;
 }
 
@@ -124,6 +127,7 @@ bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
     free(q->head->value);
     free(q->head);
     q->head = temp;
+    q->size--;
     return true;
 }
 
@@ -136,7 +140,9 @@ int q_size(queue_t *q)
     /* TODO: You need to write the code for this function */
     /* Remember: It should operate in O(1) time */
     /* TODO: Remove the above comment when you are about to implement. */
-    return 0;
+    if (!q || !q->head)
+        return 0;
+    return q->size;
 }
 
 /*
