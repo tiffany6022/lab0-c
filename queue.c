@@ -160,6 +160,7 @@ void q_reverse(queue_t *q)
         list_ele_t *_prev = NULL;
         list_ele_t *_curr = q->head;
         list_ele_t *_next = q->head->next;
+        q->tail = _curr;
         while (_next) {
             _curr->next = _prev;
             _prev = _curr;
