@@ -161,7 +161,7 @@ void q_reverse(queue_t *q)
 {
     /* TODO: You need to write the code for this function */
     /* TODO: Remove the above comment when you are about to implement. */
-    if (q) {
+    if (q && q->head) {
         list_ele_t *_prev = NULL;
         list_ele_t *_curr = q->head;
         list_ele_t *_next = q->head->next;
@@ -223,10 +223,12 @@ void q_sort(queue_t *q)
 {
     /* TODO: You need to write the code for this function */
     /* TODO: Remove the above comment when you are about to implement. */
-    q->head = mergeSortList(q->head);
-    list_ele_t *temp = q->head;
-    while (temp->next) {
-        temp = temp->next;
+    if (q && q->head) {
+        q->head = mergeSortList(q->head);
+        list_ele_t *temp = q->head;
+        while (temp->next) {
+            temp = temp->next;
+        }
+        q->tail = temp;
     }
-    q->tail = temp;
 }
