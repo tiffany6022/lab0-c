@@ -25,20 +25,22 @@ queue_t *q_new()
 void q_free(queue_t *q)
 {
     /* TODO: How about freeing the list elements and the strings? */
-    if (q) {
-        if (q->head) {
-            while (q->head->next) {
-                list_ele_t *temp = q->head->next;
-                free(q->head->value);
-                free(q->head);
-                q->head = temp;
-            }
-            free(q->head->value);
-            free(q->head);
-        }
-        /* Free queue structure */
+    if (!q)
+        return;
+    if (!q->head) {
         free(q);
+        return;
     }
+    while (q->head->next) {
+        list_ele_t *temp = q->head->next;
+        free(q->head->value);
+        free(q->head);
+        q->head = temp;
+    }
+    /* Free queue structure */
+    free(q->head->value);
+    free(q->head);
+    free(q);
 }
 
 /*
@@ -161,20 +163,20 @@ void q_reverse(queue_t *q)
 {
     /* TODO: You need to write the code for this function */
     /* TODO: Remove the above comment when you are about to implement. */
-    if (q && q->head) {
-        list_ele_t *_prev = NULL;
-        list_ele_t *_curr = q->head;
-        list_ele_t *_next = q->head->next;
-        q->tail = _curr;
-        while (_next) {
-            _curr->next = _prev;
-            _prev = _curr;
-            _curr = _next;
-            _next = _curr->next;
-        }
+    if (!q || !q->head)
+        return;
+    list_ele_t *_prev = NULL;
+    list_ele_t *_curr = q->head;
+    list_ele_t *_next = q->head->next;
+    q->tail = _curr;
+    while (_next) {
         _curr->next = _prev;
-        q->head = _curr;
+        _prev = _curr;
+        _curr = _next;
+        _next = _curr->next;
     }
+    _curr->next = _prev;
+    q->head = _curr;
 }
 
 /*
@@ -240,12 +242,12 @@ void q_sort(queue_t *q)
     /* TODO: You need to write the code for this function */
     /* TODO: Remove the above comment when you are about to implement. */
     /* https://npes87184.github.io/2015-09-12-linkedListSort/ */
-    if (q && q->head) {
-        q->head = mergeSortList(q->head);
-        list_ele_t *temp = q->head;
-        while (temp->next) {
-            temp = temp->next;
-        }
-        q->tail = temp;
+    if (!q || !q->head)
+        return;
+    q->head = mergeSortList(q->head);
+    list_ele_t *temp = q->head;
+    while (temp->next) {
+        temp = temp->next;
     }
+    q->tail = temp;
 }
