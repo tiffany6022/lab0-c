@@ -15,6 +15,7 @@ queue_t *q_new()
     /* TODO: What if malloc returned NULL? */
     if (!q)
         return NULL;
+
     q->head = NULL;
     q->tail = NULL;
     q->size = 0;
@@ -31,6 +32,7 @@ void q_free(queue_t *q)
         free(q);
         return;
     }
+
     while (q->head->next) {
         list_ele_t *temp = q->head->next;
         free(q->head->value);
@@ -66,8 +68,10 @@ bool q_insert_head(queue_t *q, char *s)
         free(newh);
         return false;
     }
+
     strncpy(newh->value, s, (strlen(s) + 1));
     newh->next = q->head;
+
     if (!q->head)
         q->tail = newh;
     q->head = newh;
@@ -98,11 +102,14 @@ bool q_insert_tail(queue_t *q, char *s)
         free(newt);
         return false;
     }
+
     strncpy(newt->value, s, (strlen(s) + 1));
     newt->next = NULL;
+
     if (!q->head)
         q->head = newt;
-    q->tail->next = newt;
+    if (q->tail)
+        q->tail->next = newt;
     q->tail = newt;
     q->size++;
     return true;
@@ -122,6 +129,7 @@ bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
     /* TODO: Remove the above comment when you are about to implement. */
     if (!q || !q->head)
         return false;
+
     if (sp) {
         if (strlen(q->head->value) < bufsize) {
             strncpy(sp, q->head->value, (strlen(q->head->value) + 1));
@@ -130,6 +138,7 @@ bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
             sp[bufsize - 1] = '\0';
         }
     }
+
     list_ele_t *temp = q->head->next;
     free(q->head->value);
     free(q->head);
@@ -165,6 +174,7 @@ void q_reverse(queue_t *q)
     /* TODO: Remove the above comment when you are about to implement. */
     if (!q || !q->head)
         return;
+
     list_ele_t *_prev = NULL;
     list_ele_t *_curr = q->head;
     list_ele_t *_next = q->head->next;
@@ -244,6 +254,7 @@ void q_sort(queue_t *q)
     /* https://npes87184.github.io/2015-09-12-linkedListSort/ */
     if (!q || !q->head)
         return;
+
     q->head = mergeSortList(q->head);
     list_ele_t *temp = q->head;
     while (temp->next) {
