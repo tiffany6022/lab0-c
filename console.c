@@ -56,7 +56,7 @@ static int fd_max = 0;
 /* Parameters */
 static int err_limit = 5;
 static int err_cnt = 0;
-static bool echo = 0;
+static int echo = 0;
 
 static bool quit_flag = false;
 static char *prompt = "cmd> ";
@@ -104,7 +104,7 @@ void init_cmd()
     add_param("simulation", &simulation, "Start/Stop simulation mode", NULL);
     add_param("verbose", &verblevel, "Verbosity level", NULL);
     add_param("error", &err_limit, "Number of errors until exit", NULL);
-    add_param("echo", (int *) &echo, "Do/don't echo commands", NULL);
+    add_param("echo", &echo, "Do/don't echo commands", NULL);
 
     init_in();
     init_time(&last_time);
