@@ -197,7 +197,7 @@ void q_reverse(queue_t *q)
 list_ele_t *merge(list_ele_t *l1, list_ele_t *l2)
 {
     list_ele_t *temp, *head;
-    if (strcmp(l1->value, l2->value) < 0) {
+    if (strcasecmp(l1->value, l2->value) < 0) {
         temp = l1;
         l1 = l1->next;
     } else {
@@ -207,7 +207,7 @@ list_ele_t *merge(list_ele_t *l1, list_ele_t *l2)
     head = temp;
 
     while (l1 && l2) {
-        if (strcmp(l1->value, l2->value) < 0) {
+        if (strcasecmp(l1->value, l2->value) < 0) {
             temp->next = l1;
             temp = temp->next;
             l1 = l1->next;
